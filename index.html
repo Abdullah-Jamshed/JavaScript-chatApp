@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatapp</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-database.js"></script>
+    <!-- <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-analytics.js"></script> -->
+
+</head>
+
+<body>
+
+    <div class="add-popup1">
+        <div class="popup-header">
+        </div>
+        <form id="form1">
+            <div class="popup-header" style="text-align: center;">
+                <h2>Login</h2>
+            </div>
+            <div class="login-field" style="margin-top: 40px;">
+                <label for="code">Code:</label>
+                <input id="login-code" type="text" placeholder="Code" value="0345">
+            </div>
+
+            <button type="button" class="create-btn" style="right: 100px;">create</button>
+            <button type="submit" class="login-btn">login</button>
+        </form>
+    </div>
+    <div class="pop-up1"></div>
+
+
+    <div class="add-popup2">
+        <div class="popup-header">
+            <h2>Add Contact</h2>
+            <i class="fa fa-times" aria-hidden="true"></i>
+        </div>
+        <form id="form2">
+
+            <div class="field">
+                <label for="name">Name:</label>
+                <input id="name" type="text" placeholder="Name">
+            </div>
+
+            <div class="field">
+                <label for="code">Code:</label>
+                <input id="code" type="text" placeholder="Code">
+            </div>
+
+            <button type="submit" class="add-btn">ADD</button>
+        </form>
+    </div>
+    <div class="pop-up2"></div>
+
+
+    <div class="main-container">
+        <div class="chatbox1">
+            <div class="chatbox-header">
+                <span class="profile-pic-container">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                </span>
+                <p class="chatbox-header-name"></p>
+            </div>
+
+            <div class="contact">
+                <ul class="contact-ul">
+                    <!-- <li class="contact-list-item">
+                        <span class="profile-pic-container2 contact-list-item">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                        </span>
+                        contact1
+                    </li>
+                    <li class="contact-list-item">
+                        <span class="profile-pic-container2 contact-list-item">
+                            <i class="fa fa-user" ></i>
+                        </span>
+                        contact2
+                    </li>
+                    <li class="contact-list-item">
+                        <span class="profile-pic-container2 contact-list-item">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                        </span>
+                        contact3
+                    </li>-->
+
+                </ul>
+
+
+            </div>
+            <div class="add-contact">+</div>
+
+        </div>
+
+        <div class="start">
+
+            <i class="fa fa-comment" aria-hidden="true"></i>
+            <h2>Start chat withyour friends</h2>
+
+        </div>
+        <div class="chatbox2">
+
+            <div class="chatbox-header-2">
+                <span class="profile-pic-container">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                </span>
+                <p class="chatbox-header-name"></p>
+            </div>
+            <div class="chat-panel">
+                <div class="message-panel">
+                    <!-- <div class="admin-li">
+                        <li>message1</li>
+                    </div>
+                    <div class="partner-li">
+                        <li>message1</li>
+                    </div> -->
+                </div>
+                <div class="message-input-div">
+                    <input id="message-text" type="text" class="message-input">
+                    <i class="fa fa-paper-plane" aria-hidden="true"></i>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <script src="./app.js"></script>
+</body>
+
+</html>
