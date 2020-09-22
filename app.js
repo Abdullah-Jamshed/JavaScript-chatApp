@@ -12,6 +12,68 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 
+var createAccount = document.querySelector(".create-btn")
+createAccount.addEventListener("click", () => {
+    var doneBtn = document.querySelector(".done-btn")
+    doneBtn.disabled = false
+    var addPopup2 = document.querySelector(".add-popup1")
+    var addPopup3 = document.querySelector(".add-popup3")
+    addPopup2.style.display = "none"
+    addPopup3.style.display = "block"
+})
+
+var backBtn = document.querySelector(".back-btn")
+backBtn.addEventListener("click", () => {
+    var addPopup2 = document.querySelector(".add-popup1")
+    var addPopup3 = document.querySelector(".add-popup3")
+    addPopup2.style.display = "block"
+    addPopup3.style.display = "none"
+})
+
+
+var form3 = document.forms["form3"]
+form3.addEventListener("submit", (e) => {
+    e.preventDefault()
+    var name = document.querySelector("#nameCreate").value
+    var phone = document.querySelector("#phoneNum").value
+    var key = firebase.database().ref("users").push().key
+    var obj = { "name": name, "code": phone, "key": key }
+
+    firebase.database().ref(`/users`).orderByChild('code').equalTo(phone).once("value", (data) => {
+        if (data.val() == null) {
+            console.log("inside");
+            if (name !== "" && phone !== "") {
+                var doneBtn = document.querySelector(".done-btn")
+                doneBtn.disabled = true
+                firebase.database().ref(`users/${key}`).set(obj)
+                sessionStorage.setItem("key", key)
+                sessionStorage.setItem("code", phone)
+
+                firebase.database().ref(`/users`).orderByChild('code').equalTo(phone).once("value", (data) => {
+                    if (data.val() != null) {
+                        var popup1 = document.querySelector(".pop-up1")
+                        var addPopup1 = document.querySelector(".add-popup1")
+                        var addPopup3 = document.querySelector(".add-popup3")
+                        addPopup1.style.display = "none"
+                        addPopup3.style.display = "none"
+                        popup1.style.display = "none"
+                        var headerName = document.querySelector(".chatbox-header-name")
+                        for (prop in data.val()) {
+                            headerName.textContent = data.val()[prop]["name"]
+                        }
+                        fetchDatabase()
+                    }
+                })
+            }
+        }else{
+            var h3 = document.createElement("h3")
+            h3.textContent = "Already Created"
+            form3.prepend(h3)
+        }
+    })
+})
+
+
 
 var login = document.forms["form1"]
 login.addEventListener("submit", (e) => {
@@ -20,7 +82,6 @@ login.addEventListener("submit", (e) => {
     loginBtn.disabled = true
     matchCode()
 })
-
 
 
 function matchCode() {
@@ -141,9 +202,9 @@ contacts.addEventListener("click", (e) => {
         sessionStorage.setItem("chatPartnerCode", code)
         chatPartner(code)
         firstRender()
-        var adminKey = sessionStorage.getItem("key")
-        var obj = { "code": code }
-        firebase.database().ref(`users/${adminKey}/currentConnect/`).update(obj)
+        // var adminKey = sessionStorage.getItem("key")
+        // var obj = { "code": code }
+        // firebase.database().ref(`users/${adminKey}/currentConnect/`).update(obj)
     }
 })
 
@@ -250,7 +311,6 @@ firebase.database().ref("messages").limitToLast(1).on("child_added", (data) => {
     var to = Data["to"]
 
     if (sender === admin && to === chatPartnerCode) {
-        console.log("yes");
         var div = document.createElement("div")
         var li = document.createElement("li")
         li.textContent = content
@@ -262,7 +322,6 @@ firebase.database().ref("messages").limitToLast(1).on("child_added", (data) => {
         }
         messagePanel.appendChild(div)
     } else if (sender === chatPartnerCode && to === admin) {
-        console.log("no");
         var div = document.createElement("div")
         var li = document.createElement("li")
         li.textContent = content
